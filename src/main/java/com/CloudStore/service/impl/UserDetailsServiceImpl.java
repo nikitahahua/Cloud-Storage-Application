@@ -1,6 +1,7 @@
-package com.CloudStore.service;
+package com.CloudStore.service.impl;
 
 import com.CloudStore.repository.UserRepository;
+import com.CloudStore.service.UserService;
 import com.CloudStore.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

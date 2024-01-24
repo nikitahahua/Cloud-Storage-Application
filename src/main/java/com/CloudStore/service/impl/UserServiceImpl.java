@@ -24,12 +24,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(User user) {
         List<User> users = getAll();
-        User userByEmail = userRepository.findUserByEmail(user.getEmail())
-                .orElseThrow(() -> new NullEntityReferenceException("User not found with email: " + user.getEmail()));
         if (user.getEmail().isEmpty() || user.getUsername().isEmpty() || user.getPassword().isEmpty()){
             throw new NullEntityReferenceException("some user fields might be empty");
         }
-        if (users.contains(userByEmail)) {
+        if (users.contains(user)) {
             throw new EntityAlreadyExistsException("User is already exist!");
         }
         return userRepository.save(user);
