@@ -1,0 +1,216 @@
+{
+	"info": {
+		"_postman_id": "2c827b0b-2ba7-45c0-b1cc-676c572df3c4",
+		"name": "CloudStorageRequests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28709462"
+	},
+	"item": [
+		{
+			"name": "register user",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "admin",
+						"username": "admin@example.com"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": "http://localhost:8080/users"
+			},
+			"response": []
+		},
+		{
+			"name": "rename obj",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "admin",
+						"username": "admin@example.com"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": "http://localhost:8080/users"
+			},
+			"response": []
+		},
+		{
+			"name": "create free way package",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "userpassword",
+						"username": "example@gmail.com"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/create-folder?folder-name=some-package&path=user-42-files/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"create-folder"
+					],
+					"query": [
+						{
+							"key": "folder-name",
+							"value": "some-package"
+						},
+						{
+							"key": "path",
+							"value": "user-42-files/"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete folder",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "userpassword",
+						"username": "example@gmail.com"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/delete-folder?path=user-41-files/test-package2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"delete-folder"
+					],
+					"query": [
+						{
+							"key": "path",
+							"value": "user-41-files/test-package2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete file",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "userpassword",
+						"username": "example@gmail.com"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/delete-folder?path=user-41-files/test-package2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"delete-folder"
+					],
+					"query": [
+						{
+							"key": "path",
+							"value": "user-41-files/test-package2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "download file",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "userpassword",
+						"username": "example@gmail.com"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/download-file?path=user-42-files/great-user/твиттера.txt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"download-file"
+					],
+					"query": [
+						{
+							"key": "path",
+							"value": "user-42-files/great-user/твиттера.txt"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload file",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {
+						"password": "userpassword",
+						"username": "example@gmail.com"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/nikitagagua/Desktop/Снимок экрана 2024-01-25 в 23.18.51.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/upload-file?path=/user-42-files/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"upload-file"
+					],
+					"query": [
+						{
+							"key": "path",
+							"value": "/user-42-files/"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
