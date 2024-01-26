@@ -41,7 +41,7 @@ public class S3ServiceImpl implements S3Service {
                             .object(fullPath)
                             .build()
             );
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new FileNotFoundException("cant download file by path : " + fullPath);
         }
     }
@@ -49,8 +49,8 @@ public class S3ServiceImpl implements S3Service {
     @SneakyThrows
     @Override
     public void uploadFile(Long userId, String path, MultipartFile file) {
-        if (!path.startsWith("/")){
-            path = "/"+path;
+        if (!path.startsWith("/")) {
+            path = "/" + path;
         }
         var fullPath = Paths.get(path, file.getOriginalFilename()).toString();
         try {
@@ -100,20 +100,16 @@ public class S3ServiceImpl implements S3Service {
     }
 
     @Override
-    public void deleteFolderRecursive(long userId, String rawPath) throws MinioException {
+    public void deleteFolderRecursive(Long userId, String rawPath) throws MinioException {
         try {
-            var objects = minioClient.listObjects(ListObjectsArgs.builder().bucket(rootBucket).recursive(true).prefix(rawPath).build());
+            Iterable<Result<Item>> objects = minioClient.listObjects(
+                    ListObjectsArgs.builder().bucket(rootBucket).recursive(true).build());
 
             for (var result : objects) {
                 var item = result.get();
-
-                // If item is a directory or if the path is not a directory and the path is equal to the item name
-                // then delete the item
-
-                if (isPathOverrideObject(item.isDir(), rawPath, item.objectName())) {
+                log.info("Found object: " + item.objectName());
+                if (isPathOverrideObject(rawPath, item.objectName())) {
                     deleteObject(item.objectName(), userId);
-
-                    log.info("Deleted object: " + item.objectName());
                 }
             }
 
@@ -135,35 +131,21 @@ public class S3ServiceImpl implements S3Service {
         createFolder(userFolderName, "/", id);
     }
 
-
-    /*
-
-    ToDo: i think im just gonna :
-                                - download content from folder
-                                - create new folder
-                                - load content in new folder
-                                - delete old folder
-
-    */
     @Override
     public void renameFolder(String path, String newFolderName, Long userId) {
         try {
-            Iterable<Result<Item>> items = minioClient.listObjects(
-                    ListObjectsArgs.builder().bucket(rootBucket).prefix(path).recursive(true).build()
-            );
+            Iterable<Result<Item>> items = listObjectsUnderPath(rootBucket, path);
 
             List<String> objectPaths = new ArrayList<>();
-            items.forEach(item -> {
-                try {
-                    objectPaths.add(item.get().objectName());
-                } catch (Exception e) {
-                    log.error("Error listing object: " + e.getMessage());
-                }
-            });
+
+            for (var item : items) {
+                objectPaths.add(item.get().objectName());
+                log.info(item.get().objectName() + " -- founded item");
+            }
 
             String newPath = Path.of(path).resolveSibling(newFolderName).toString();
 
-            createFolder(newFolderName, newPath, userId);
+            createFolder("", newPath, userId);
 
             for (String objectPath : objectPaths) {
                 String newObjectPath = objectPath.replace(path, newPath);
@@ -173,21 +155,9 @@ public class S3ServiceImpl implements S3Service {
                     log.error("Error copying object from " + objectPath + " to " + newObjectPath + ": " + e.getMessage());
                 }
             }
-            deleteObject(path, userId);
+            deleteFolderRecursive(userId, path);
         } catch (Exception e) {
             log.error("Error renaming folder: " + e.getMessage());
-        }
-    }
-
-    private void isUserFolder(String path, Long userId) {
-        String expectedFolderName = "user-" + userId + "-files";
-        if (Objects.equals(path, "") || Objects.equals(path, "/")){
-            return;
-        }
-        path = path.replace("/", "");
-        boolean isUserFolder = path.startsWith(expectedFolderName);
-        if (!isUserFolder) {
-            throw new FolderSecurityException("Can't delete someone else's file, only yours.");
         }
     }
 
@@ -203,34 +173,29 @@ public class S3ServiceImpl implements S3Service {
         log.info("Successfully copied object from " + sourcePath + " to " + destPath);
     }
 
-    private Iterable<Result<Item>> findObjects(String name, String prefix, String startAfter) {
-        return minioClient.listObjects(
-                ListObjectsArgs.builder()
-                        .bucket(name)
-                        .startAfter("")
-                        .prefix(prefix)
-                        .maxKeys(100)
-                        .build());
+    private Iterable<Result<Item>> listObjectsUnderPath(String bucketName, String path) {
+        ListObjectsArgs args = ListObjectsArgs.builder()
+                .bucket(bucketName)
+                .prefix(path)
+                .recursive(true)
+                .build();
+
+        return minioClient.listObjects(args);
     }
 
-    private boolean isPathOverrideObject(boolean isDir, String path, String objectName) {
-        return isDir || path.length() - 1 < objectName.lastIndexOf("/") || objectName.equals(path);
-    }
-
-    private void removeListObjects(String bucketName, List<DeleteObject> objects) throws MinioException {
-        Iterable<Result<DeleteError>> results = minioClient.removeObjects(
-                        RemoveObjectsArgs.builder().bucket(bucketName).objects(objects).build());
-        for (Result<DeleteError> result : results) {
-            DeleteError error;
-            try {
-                error = result.get();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            log.warn("Error in deleting object " + error.objectName() + "; " + error.message());
-            throw new MinioException("Error in deleting object " + error.objectName() + "; " + error.message());
+    private void isUserFolder(String path, Long userId) {
+        String expectedFolderName = "user-" + userId + "-files/";
+        if (Objects.equals(path, "") || Objects.equals(path, "/")) {
+            return;
+        }
+        boolean isUserFolder = path.startsWith(expectedFolderName);
+        if (!isUserFolder) {
+            throw new FolderSecurityException("Can't reach to someone else's file, only yours.");
         }
     }
 
+    private boolean isPathOverrideObject(String path, String objectName) {
+        return objectName.startsWith(path);
+    }
 
 }

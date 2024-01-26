@@ -10,7 +10,7 @@ public interface S3Service {
     Object downloadFile(String fullPath, Long id);
     void uploadFile(Long userId, String rawFullPath, MultipartFile file);
     void deleteObject(String path, Long userId) ;
-    void deleteFolderRecursive(long userId, String rawPath) throws MinioException;
+    void deleteFolderRecursive(Long userId, String rawPath) throws MinioException;
     void createUserInitialFolder(Long id);
     void renameFolder(String path, String newFolderName,  Long userId) throws MinioException;
     void createFolder (String folderName, String path, Long userId);

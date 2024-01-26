@@ -40,11 +40,11 @@ public class S3Controller {
     }
 
     @DeleteMapping("delete-folder")
-    public ResponseEntity<String> deleteFolder(@RequestParam("path") String path, @RequestParam("folder-name") String folderName, Authentication authentication){
+    public ResponseEntity<String> deleteFolder(@RequestParam("path") String path, Authentication authentication) throws MinioException {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User loadedUser = (User) userDetailsService.loadUserByUsername(userDetails.getUsername());
         Long userId = loadedUser.getId();
-        fileService.deleteFolderRecursive(folderName, path, userId);
+        fileService.deleteFolderRecursive(userId, path);
         return new ResponseEntity<>("successfully deleted folder by path: "+ path, HttpStatus.OK);
     }
 
