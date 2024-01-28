@@ -1,11 +1,13 @@
 package com.CloudStore.controllers;
 
 import com.CloudStore.exceptions.FileNotFoundException;
+import com.CloudStore.messages.DeleteObjectMessage;
 import com.CloudStore.model.User;
+import com.CloudStore.service.RabbitMqProducerService;
 import com.CloudStore.service.S3Service;
 import io.minio.errors.MinioException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -13,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -23,10 +26,13 @@ import java.nio.charset.StandardCharsets;
 @RestController
 @Slf4j
 public class S3Controller {
+
     private final S3Service fileService;
+    private final RabbitMqProducerService producerService;
     private final UserDetailsService userDetailsService;
-    public S3Controller(S3Service fileService, UserDetailsService userDetailsService) {
+    public S3Controller(S3Service fileService, RabbitMqProducerService producerService, UserDetailsService userDetailsService) {
         this.fileService = fileService;
+        this.producerService = producerService;
         this.userDetailsService = userDetailsService;
     }
 
@@ -44,7 +50,8 @@ public class S3Controller {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User loadedUser = (User) userDetailsService.loadUserByUsername(userDetails.getUsername());
         Long userId = loadedUser.getId();
-        fileService.deleteFolderRecursive(userId, path);
+        DeleteObjectMessage deleteObjectMessage = new DeleteObjectMessage(true, userId, path);
+        producerService.sendDeleteMessage(deleteObjectMessage);
         return new ResponseEntity<>("successfully deleted folder by path: "+ path, HttpStatus.OK);
     }
 
@@ -53,7 +60,8 @@ public class S3Controller {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User loadedUser = (User) userDetailsService.loadUserByUsername(userDetails.getUsername());
         Long userId = loadedUser.getId();
-        fileService.deleteObject(path, userId);
+        DeleteObjectMessage deleteObjectMessage = new DeleteObjectMessage(false, userId, path);
+        producerService.sendDeleteMessage(deleteObjectMessage);
         return new ResponseEntity<>("successfully deleted file by path: "+ path, HttpStatus.OK);
     }
 

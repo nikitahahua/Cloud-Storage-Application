@@ -1,4 +1,4 @@
-package com.CloudStore.config;
+package com.CloudStore.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
