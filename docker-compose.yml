@@ -12,29 +12,18 @@ services:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin
     command: server /data --console-address ":9001"
+
   redis:
     image: redis:latest
     platform: linux/amd64
     command: redis-server
     volumes:
       - redis:/var/lib/redis
-      - redis-config:/usr/local/etc/redis/redis.conf
     ports:
       - "6379:6379"
     networks:
       - redis-network
-  redis-commander:
-    image: rediscommander/redis-commander:latest
-    environment:
-      - REDIS_HOSTS=local:redis:6379
-      - HTTP_USER=root
-      - HTTP_PASSWORD=qwerty
-    ports:
-      - "8081:8081"
-    networks:
-      - redis-network
-    depends_on:
-      - redis
+
   rabbitmq:
     image: rabbitmq:alpine
     container_name: rabbitmq
@@ -44,9 +33,20 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: yourpasswordhere
+      MYSQL_DATABASE: CloudStorageDB
+    ports:
+      - '3306:3306'
+    volumes:
+      - my-db:/var/lib/mysql
 volumes:
+  my-db:
   redis:
-  redis-config:
   minio_data:
 networks:
   redis-network:

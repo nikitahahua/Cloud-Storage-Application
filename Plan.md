@@ -27,18 +27,17 @@ Implement user authentication and authorization using Spring Security.
 ```
 ---
 
-### (26-27 january): File Download and Messaging (RabbitMQ)
+### (26-27 january): Sessions (Redis) ✅
 ```diff
-Set up RabbitMQ for asynchronous messaging.
-Create message producers and consumers for specific tasks
+Integrate Redis for sessions.✅
 ``` 
 ---
 
-### (28-29 january): Caching (Redis) and Basic Front-end Design
+### (28-29 january): RabbitMQ 
 ```diff
-Integrate Redis for caching.
-Implement caching for user sessions and frequently queried data.
-Begin designing basic HTML and CSS for front-end pages
+Integrate RabbitMQ to send messages:
+    - add topics
+    - producer, consumers rabbitMQ architecture for diff topics
 ``` 
 ---
 

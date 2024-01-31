@@ -1,8 +1,8 @@
 package com.CloudStore.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
