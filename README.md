@@ -34,7 +34,7 @@ POST /auth/register - Register a new user with a username, email, and password.
 }
 ```
 
-File functions:
+## File functions:
 
 you have to log in by adress http://localhost:9001/login
 
@@ -51,7 +51,9 @@ when you register application will create root folder named like user-${user's i
 also you can see other users folders but you have bo access to them
 ![Снимок экрана 2024-02-01 в 02 02 17](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/78bc08c4-31a5-4e62-89d7-16ada323b2c4)
 
-you can delete some file or folder from your root package, example:
+---
+
+### You can delete some file or folder from your root package, example:
 
 ![image](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/56810ccc-3b2f-4c81-938f-23fdd216986d)
 
@@ -71,6 +73,16 @@ result:
 ![image](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/99d7cb1f-9802-475e-b5e2-e6b98c51c78e)
 
 #### Successfully downloaded!!!
+
+---
+
+## Let's upload some file:
+
+<img width="648" alt="image" src="https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/c859542b-609c-4300-9fd4-89cafdaa5d99">
+
+## Result:
+
+![Снимок экрана 2024-02-01 в 02 59 56 1](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/26628ad8-5ba3-49d8-9d96-03629b5e676c)
 
 
 
