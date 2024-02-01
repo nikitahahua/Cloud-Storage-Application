@@ -56,6 +56,7 @@ you can delete some file or folder from your root package, example:
 ![image](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/56810ccc-3b2f-4c81-938f-23fdd216986d)
 
 <img width="721" alt="image" src="https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/67afa120-a65b-41b0-872d-be5351a8cea9">
+
 ![image](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/236b3634-cbea-40b1-8e9d-debff3e5ed69)
 
 result:
