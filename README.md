@@ -62,14 +62,19 @@ also you can see other users folders but you have bo access to them
 ![image](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/236b3634-cbea-40b1-8e9d-debff3e5ed69)
 
 result:
+
 ![image](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/a1ee6532-a2e4-42a7-87f6-d63cd7267f80)
 
 ### Let's try to download some file, on example i do it via browser:
 
 ![image](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/49d71ab5-5b88-42ae-b7b5-cd0f0f3157cd)
+
 ---
+
 #### http://localhost:8080/download-file?path=user-42-files/4d3a97b20a72f741931c98447ef0a5ac.jpg
+
 ---
+
 ![image](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/99d7cb1f-9802-475e-b5e2-e6b98c51c78e)
 
 #### Successfully downloaded!!!
@@ -83,6 +88,22 @@ result:
 ## Result:
 
 ![Снимок экрана 2024-02-01 в 02 59 56 1](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/26628ad8-5ba3-49d8-9d96-03629b5e676c)
+
+---
+
+## Let's Rename some folder:
+
+![Снимок экрана 2024-02-01 в 03 04 30](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/a9fbb68d-cb3b-4285-9379-e3157913f028)
+
+there is files inside;
+
+![image](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/6d6648e6-b526-4382-b506-930fbd9bdb85)
+
+<img width="674" alt="image" src="https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/e374e90b-b99d-49b8-b0a3-6b9d19c2b06e">
+
+## Result:
+
+![Снимок экрана 2024-02-01 в 03 06 12](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/a0f1978f-07ee-422b-a93b-0ec73684fbcd)
 
 
 
