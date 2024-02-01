@@ -62,6 +62,18 @@ you can delete some file or folder from your root package, example:
 result:
 ![image](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/a1ee6532-a2e4-42a7-87f6-d63cd7267f80)
 
+### Let's try to download some file, on example i do it via browser:
+
+![image](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/49d71ab5-5b88-42ae-b7b5-cd0f0f3157cd)
+---
+#### http://localhost:8080/download-file?path=user-42-files/4d3a97b20a72f741931c98447ef0a5ac.jpg
+---
+![image](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/99d7cb1f-9802-475e-b5e2-e6b98c51c78e)
+
+#### Successfully downloaded!!!
+
+
+
 
 
 
