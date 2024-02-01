@@ -105,8 +105,11 @@ there is files inside;
 
 ![Снимок экрана 2024-02-01 в 03 06 12](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/a0f1978f-07ee-422b-a93b-0ec73684fbcd)
 
+![image](https://github.com/nikitagagua/Cloud-Storage-Application/assets/110698480/ae7371a5-bd43-4972-86e4-497eb0ad7f1b)
 
+---
 
+You can import the provided Postman collection file (CloudStorageRequests.postman_collection.json) to easily test the API endpoints. The collection includes sample requests for various API actions.
 
 
 
